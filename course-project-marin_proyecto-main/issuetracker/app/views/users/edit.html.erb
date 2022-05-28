@@ -1,0 +1,39 @@
+<br>
+
+<%= form_with(model: @user) do |form| %>
+  <% if @user.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+        <% @user.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+    <%else%>
+    
+    <form>
+ <h2><%=@user.first_name%><%=" "%><%=@user.last_name%></h2> 
+ <h5><%=@user.email%></h5>
+          
+  <div class="form-group">
+    <%= form.label :phone, class: "form-label" %>
+    <%= form.text_field :phone, class: "form-control"%> 
+  </div>
+ <div class="col">
+     <%= form.label :roll, class: "form-label" %>
+    <%= form.select :roll_id, [["User", "1"], ["Executive", "2"], ["Supervisor", "3"]], selected: :roll_roll %>
+</div>
+  <div>
+  <button type="submit" class="btn btn-info">Update</button>
+  </div>
+</form>
+  <% end %>
+  
+<% end %>
+
+<div>
+  <%= link_to "Show this user", @user %> |
+  <%= link_to "Back to users", users_path %>
+</div>

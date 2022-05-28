@@ -1,0 +1,71 @@
+<p id="notice"><%= notice %></p>
+<%= render @user %>
+<div class="row ml-0">
+    <div class="col-6">
+        <h3><%=@user.first_name%><%=" "%><%=@user.last_name%></h3>
+        <h5><%="ID "%><%=@user.id%></h5>
+        <ul class="list-unstyled">
+            <li><strong>First name: </strong><%=@user.first_name%></li>
+            <li><strong>Last name: </strong><%=@user.last_name%></li>
+            <li><strong>Email: </strong><%=@user.email%></li>
+            <li><strong>Roll: </strong><%=@user.roll.roll%></li>
+      </ul>
+       <div>
+<button type="button" class="btn btn-outline-info" ><%= link_to "Edit User", edit_user_path(@user) %> 
+  <button type="button" class="btn btn-outline-info" ><%= link_to "Back", users_path %>
+</div>
+<p></p>
+</div>
+</div>
+<% if @user.roll.roll=="Executive" %>
+<h1>List of assigned tickets</h1>
+    <body>
+    <table class="table">
+  <thead class="bg-info">
+      <th>ID</th>
+      <th>User</th>
+      <th>Title</th>
+      <th>State</th>
+      <th>Creation Date</th>
+      <th>View</th>
+      <th>Edit</th>
+      </thead>
+    <tbody>
+    <% @tickets.where(executive_id:@user).sort{|a,b| b.creation_date <=> a.creation_date}.each do |ticket| %>
+      <tr>
+          <td><%=ticket.id%></td>
+          <td><%=ticket.user.first_name%><%=" "%><%=ticket.user.last_name%></td>
+          <td><%=ticket.title%></td>
+          <td><%=ticket.state%></td>
+          <td><%=ticket.creation_date%></td>
+          <td><button type="button" class="btn btn-sm btn-outline-secondary"><%= link_to "View", ticket %></button></td>
+          <td><button type="button" class="btn btn-sm btn-outline-secondary"><%= link_to "Edit", edit_ticket_path(ticket) %></button></td>
+        <tr>
+    </tbody>
+    <%end%> 
+     <%else%>
+    <h1>Tickets List</h1>
+    <body>
+    <table class="table">
+  <thead class="bg-info">
+      <th>ID</th>
+      <th>Title</th>
+      <th>State</th>
+      <th>Creation Date</th>
+      <th>View</th>
+      </thead>
+    <tbody>
+    <% @user.tickets.sort{|a,b| b.creation_date <=> a.creation_date}.each do |ticket| %>
+      <tr>
+          <td><%=ticket.id%></td>
+          <td><%=ticket.title%></td>
+          <td><%=ticket.state%></td>
+          <td><%=ticket.creation_date%></td>
+          <td><button type="button" class="btn btn-sm btn-outline-secondary"><%= link_to "View", ticket %></button></td>
+        <tr>
+    </tbody>
+    <%end%>
+    
+  
+<p style="color: green"><%= notice %></p>
+  <%end%>

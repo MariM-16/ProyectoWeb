@@ -1,0 +1,32 @@
+<h1>New ticket</h1>
+
+<%= form_with(model: @ticket) do |form| %>
+  <% if @ticket.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@ticket.errors.count, "error") %> prohibited this ticket from being saved:</h2>
+      <ul>
+        <% @ticket.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+    <%else%>
+    <div class="mb-3">
+        <%= form.label :title, class: "form-label" %>
+        <%= form.text_field :title, class: "form-control" %>
+      </div>
+    <div class="mb-3">
+        <%= form.label :description_problem, class: "form-label" %>
+        <%= form.text_area :description, class: "form-control" %>
+        <%=form.hidden_field :state, value: "open" %>
+         <%=form.hidden_field :user_id, value: "1" %>
+      </div>
+ <div>
+  <%= form.submit %>
+  </div> 
+
+  <% end %>  
+<% end %>
+<div>
+  <%= link_to "Back to tickets", tickets_path %>
+</div>

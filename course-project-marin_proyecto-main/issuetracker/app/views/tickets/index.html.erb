@@ -1,0 +1,45 @@
+<p style="color: green"><%= notice %></p>
+  <h1>Tickets List</h1>
+  <div>
+<button type="button" class="btn btn-outline-info" ><%= link_to "Back", root_path %> 
+  </div>
+  <table class="table">
+  <thead class="bg-info">
+      <th>ID</th>
+      <th>Email</th>
+      <th>User</th>
+      <th>Title</th>
+      <th>Executive</th>
+      <th>State</th>
+      <th>Creation Date</th>
+      <th>Priority</th>
+      <th>View</th>
+      <th>Edit</th>
+      </thead>
+  <% @tickets.sort{|a,b| b.creation_date <=> a.creation_date}.each do |ticket| %>
+    <%= render ticket %>
+          <tr>
+          <td><%=ticket.id%></td>
+          <td><%=ticket.user.email%></td>
+          <td><%=ticket.user.first_name%><%=" "%><%=ticket.user.last_name%></td>
+          <td><%=ticket.title%></td>
+          <td><%=ticket.executive.first_name%><%=" "%><%=ticket.executive.last_name%></td>
+          <td><%=ticket.state%></td>
+          <td><%=ticket.creation_date%></td>
+          <% if ticket.priority=="High" %>
+          <td><div style="border-radius 10px; -moz-border-radius 10px; -webkit-border-radius 10px; width: 35px; height: 25px; background:  #f74141; border: solid with 1px;"><%=ticket.priority%></div></td>
+          <% else-if ticket.priority=="Half" %>
+          <td><div style="border-radius 10px; -moz-border-radius 10px; -webkit-border-radius 10px; width: 35px; height: 25px; background:  #78d071 ; border: solid with 1px;"><%=ticket.priority%></div></td>
+          <% else-if ticket.priority=="Low" %>
+          <td><div style="border-radius 10px; -moz-border-radius 10px; -webkit-border-radius 10px; width: 35px; height: 25px; background:  #eef557 ; border: solid with 1px;"><%=ticket.priority%></div></td>
+          <%else%>
+          <td><%=ticket.priority%></td>
+          <%end%>
+          <%end%>
+          <%end%>
+          <td><button type="button" class="btn btn-sm btn-outline-secondary" ><%= link_to "View", ticket %></button></td>
+          <td><button type="button" class="btn btn-sm btn-outline-secondary"><%= link_to "Edit", edit_ticket_path(ticket) %></button></td>
+         
+        <tr>
+  <% end %>
+
