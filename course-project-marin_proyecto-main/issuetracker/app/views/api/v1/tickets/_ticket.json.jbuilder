@@ -1,2 +1,0 @@
-json.extract! ticket, :id, :title, :description, :user_id, :executive_id, :priority, :state, :category, :creation_date, :resolution_date, :limit_date, :tags, :docs, :key_resolution, :created_at, :updated_at
-json.url ticket_url(ticket, format: :json)
