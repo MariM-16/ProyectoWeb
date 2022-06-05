@@ -1,0 +1,28 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Performances</h1>
+<div class="row ml-0">
+    <div class="col-6">
+        <ul class="list-unstyled">
+            <li><strong>Executive: </strong><%=@performance.executive.first_name%><%=" "%><%=@performance.executive.last_name%></li>
+            <li><strong>ID: </strong><%=@performance.executive_id%></li>
+            <li><strong>Prom: </strong><%=Performance.where(executive_id:@performance.executive.id).average(:evaluation)%></li>
+      </ul>
+       <div>
+  <table class="table">
+  <thead class="bg-info">
+      <th>ID</th>
+      <th>User</th>
+      <th>Evaluation</th>
+      </thead>
+    <%= render @performance %>
+          <tr>
+          <td><%=@performance.id%></td>
+          <td><%=@performance.user.email%></td>
+          <td><%=@performance.evaluation%></td>
+        <tr>
+</div>
+<div>
+  <%= link_to "Back to performances", performances_path %>
+</div>
+

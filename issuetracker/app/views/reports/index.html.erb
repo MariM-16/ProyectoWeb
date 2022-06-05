@@ -1,0 +1,20 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Reports</h1>
+
+ <table class="table">
+  <thead class="bg-info">
+      <th>ID</th>
+      <th>Report</th>
+      <th>Creation Date</th>
+      <th>View</th>
+      </thead>
+  <% @reports.sort{|a,b| b.created_at <=> a.created_at}.each do |report| %>
+    <%= render report %>
+          <tr>
+          <td><%=report.id%></td>
+          <td><%=report.report%></td>
+          <td><%=report.created_at%></td>
+          <td><button type="button" class="btn btn-sm btn-outline-secondary" ><%= link_to "View", report %></button></td>         
+        <tr>
+  <% end %>

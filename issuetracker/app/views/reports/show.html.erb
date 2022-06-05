@@ -1,0 +1,94 @@
+<p style="color: green"><%= notice %></p>
+<%if @report_r.report=='Report Tickets by Date'%>
+<h4><strong><%=@report_r.report%></strong></h4>
+
+<h5><strong><%="Init Date: "%></strong><%=@report_r.init_date%></h5>
+<h5><strong><%="Finish Date: "%></strong><%=@report_r.finish_date%></h5>
+<div id='colum'>
+          <table class="table">
+          <thead class="bg-info">
+              <th>Open</th>
+              <th>Close</th>
+              <th>Reopen</th>
+              <th>Total</th>
+              </thead>
+            <tbody>
+              <tr>
+                  <td><%= Ticket.where(state:"open" ).count()%></td>
+                  <td><%= Ticket.where(state:"close" ).count()%></td>
+                  <td><%= Ticket.where(state:"reopen" ).count()%></td>
+                  <td><%= Ticket.all.count()%></td>
+                <tr>
+            </tbody>
+            </div>
+
+<p>AND creation_date:>=@report_r.init_date OR creation_date:<=@report_r.finish_date</p>
+<div id='colrep'>   
+    <meta charset="UTF-8">
+    <meta name="viewport" content=
+        "width=device-width, initial-scale=1.0">
+    <style>
+        .piechart {
+          label: "Tickets Graph";
+            display: block;
+            top:-400px;
+            left: 600px;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background-image: conic-gradient(
+                pink <%=(((Ticket.where(state:"open").count())*(360))/(Ticket.count()))%><%='deg'%>, 
+                lightblue 0 <%=(((Ticket.where(state:"close").count())*(360))/(Ticket.count()))%><%='deg'%>);
+        }
+        body,
+        .piechart {
+            display: flex;
+            justify-content: center;
+            align-items: center;            
+        }
+    </style>
+
+    <div class="piechart">  
+    
+    <p style="color:pink; background:#9e007c; border-radius: 10%;"><%=Ticket.where(state:"open").count()%><%=' Open    -'%></p>
+    <p><%='  '%></p>
+    <p style="color:lightblue; background:#9e007c; border-radius: 10%;"><%='-   '%><%=Ticket.where(state:"close").count()%><%=' Close'%></p>
+    </div>
+
+</div>
+
+<%if @report_r.report=='Expire Ticket Report'%>
+<h4><strong><%=@report_r.report%></strong></h4>
+
+<h5><strong><%="Init Date: "%></strong><%=@report_r.init_date%></h5>
+<h5><strong><%="Finish Date: "%></strong><%=@report_r.finish_date%></h5>
+<div id='colum'>
+          <table class="table">
+          <thead class="bg-info">
+              <th>ID</th>
+              <th>User</th>
+              <th>Title</th>
+              <th>Executive</th>
+              <th>State</th>
+              <th>Limit Date</th>
+              <th>View</th>
+              <th>Edit</th>
+              </thead>
+            <tbody>
+        <% @tickets.each do |ticket| %>
+            <%= render ticket %>
+          <tr>
+          <td><%=ticket.id%></td>
+          <td><%=ticket.user.first_name%><%=" "%><%=ticket.user.last_name%></td>
+          <td><%=ticket.title%></td>
+          <td><%=ticket.executive.first_name%><%=" "%><%=ticket.executive.last_name%></td>
+          <td><%=ticket.state%></td>
+          <td><%=ticket.limit_date%></td>
+          <td><button type="button" class="btn btn-sm btn-outline-secondary" ><%= link_to "View", ticket %></button></td>
+          <td><button type="button" class="btn btn-sm btn-outline-secondary"><%= link_to "Edit", edit_ticket_path(ticket) %></button></td>
+          <tr>
+            </tbody>
+            </div>
+            <%end%>
+
+<%end%><%end%>

@@ -1,0 +1,87 @@
+<p style="color: green"><%= notice %></p>
+
+<div class="row ml-0">
+    <div class="col-6">
+        <h2><%=@ticket.title%></h2>
+        <h4><%="Ticket ID: "%><%=@ticket.id%></h4>
+        <h3><%=@ticket.user.first_name%><%=" "%><%=@ticket.user.last_name%></h3><ul class="list-unstyled">
+            <li><strong>Description: </strong><%=@ticket.description%></li>
+            <li><strong>Category: </strong><%=@ticket.category%></li>
+            <li><strong>Priority: </strong><%=@ticket.priority%></li>
+            <li><strong>State: </strong><%=@ticket.state%></li>
+            <li><strong>Executive: </strong><%=@ticket.executive.first_name%><%=" "%><%=@ticket.executive.last_name%></li>
+            <li><strong>Creation Date: </strong><%=@ticket.creation_date%></li>
+            <li><strong>Limit Date: </strong><%=@ticket.limit_date%></li>
+            <% if @ticket.state=='close' %>
+            <li><strong>Resolution Date: </strong><%=@ticket.resolution_date%></li>
+            <%else %>
+            <p></p>
+            <%end%>
+</ul> 
+<button type="button" class="btn btn-sm btn-outline-info"><%= link_to "Edit Ticket", edit_user_ticket_path(@ticket.user.id,@ticket) %></button> 
+<button type="button" class="btn btn-sm btn-outline-secondary"><%= link_to "Back to tickets", tickets_path %></button>
+<p></p>
+<% @ticket.comments.each do |comment| %><%end%>    
+<div class="btn-group">
+<button type="button" class="btn btn-sm btn-outline-secondary"><%= link_to "Comments", new_ticket_comment_path(@ticket,@comment) %></button>
+<button type="button" class="btn btn-sm btn-outline-secondary"><%= link_to "Response", new_ticket_response_path(@ticket,@response)%></button>
+<button type="button" class="btn btn-sm btn-outline-secondary"><%= link_to "New performance", new_ticket_performance_path(@ticket,@performance) %></button>
+    </div>
+<div id="image">
+<h3>Documents</h3>
+<% if @ticket.documents.attached? %>
+    <%= link_to image_tag(@ticket.documents, class: "card-img-top", width: "800px", background: "#55595c", color: "#eceeef"), url_for(@ticket) %>
+  <%else %>
+  <p></p>
+  <%end%>
+  </div>
+</div>
+<div>
+    <body>
+   <table class="table">
+  <thead class="bg-info">
+      <th>ID</th>
+      <th>Comment</th>
+      <th>Executive</th>
+      <th>Creation Date</th>
+      </thead>
+    <tbody>
+    <% @ticket.comments.each do |comment| %>
+      <tr>
+          <td><%=comment.id%></td>
+          <td><%=comment.comment%></td>
+          <td><%=comment.user.first_name%><%=" "%><%=comment.user.last_name%></td>
+          <td><%=comment.comment_date%></td>
+        <tr>
+    </tbody>
+    
+    <%end%>
+    
+    </body>
+  </div>
+<div>
+    <body>
+   <table class="table">
+  <thead class="bg-info">
+      <th>ID</th>
+      <th>Response</th>
+      <th>Executive</th>
+      <th>Creation Date</th>
+      </thead>
+    <tbody>
+    <% @ticket.responses.each do |resp| %>
+      <tr>
+          <td><%=resp.id%></td>
+          <td><%=resp.response%></td>
+          <td><%=resp.user.first_name%><%=" "%><%=resp.user.last_name%></td>
+          <td><%=resp.response_date%></td>
+        <tr>
+    </tbody>
+    <%end%>
+    </body>
+  </div>
+<%= render @ticket %>
+
+<div>
+ </div>
+</div>
