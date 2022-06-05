@@ -1,0 +1,23 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Performances</h1>
+  <table class="table">
+  <thead class="bg-info">
+      <th>ID</th>
+      <th>Executive</th>
+      <th>Prom</th>
+      <th>View</th>
+      </thead>
+      <% @performances.each do |performance| %>
+    <%= render performance %>
+          <tr>
+          <td><%=performance.id%></td>
+          <td><%=performance.executive.first_name%><%=" "%><%=performance.executive.last_name%></td>
+          <td><%=Performance.where(executive_id:performance.executive.id).average(:evaluation)%></td>
+          <td><button type="button" class="btn btn-sm btn-outline-secondary"><%= link_to "View", performance %></button></td>
+
+        <tr>
+  <% end %>
+</div>
+
+

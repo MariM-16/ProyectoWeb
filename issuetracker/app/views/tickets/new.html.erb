@@ -1,0 +1,40 @@
+<h1>New ticket</h1>
+
+<%= form_with(model: @ticket) do |form| %>
+  <% if @ticket.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@ticket.errors.count, "error") %> prohibited this ticket from being saved:</h2>
+      <ul>
+        <% @ticket.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+    <%else%>
+    <div class="mb-3">
+        <h5><strong> Title</strong></h5>
+        <div id="colp"><%= form.text_field :title, class: "form-control" %></div>
+      </div>
+    <div class="mb-3">
+        <h5><strong> Description problem </strong></h5>
+       <div id="colp"><%= form.text_area :description, class: "form-control" %></div>
+        <%=form.hidden_field :state, value: "open" %>
+        <%=form.hidden_field :user_id, value: "1" %>
+        <%=form.hidden_field :executive_id, value: "4" %>
+        <%=form.hidden_field :creation_date, value: Time.now %> 
+        <%=form.hidden_field :priority, value: 'Half' %>
+        <%=form.hidden_field :limit_date, value: ((Time.now) + (120 * 120 * 48)) %> 
+      <div class="mb-3">
+        <h5><strong>Documents </strong></h5>
+        <%= form.file_field :documents, class: "form-control-file" %>
+      </div>  
+      </div>
+ <div>
+  <%= form.submit %>
+  </div> 
+
+  <% end %>  
+<% end %>
+<div>
+  <%= link_to "Back to tickets", tickets_path %>
+</div>
